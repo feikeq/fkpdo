@@ -6,8 +6,8 @@
  返回对象  = FK_PDO(表名,字段数组或字符串,条件数组或字符串,分组数组或字符串,排序数组或字符串,行数数组或字符串);
  实例:
 
- //    SQL:  INSERT INTO `tabName` ( `name`, `sxe`) VALUES ( 'a', '2') ;
- // FK-PDO:  FK_PDO('tabName',array('name' =>'a' , 'sxe'=>'2')    );
+#### //    SQL:  INSERT INTO `tabName` ( `name`, `sxe`) VALUES ( 'a', '2') ;
+>  // FK-PDO:  FK_PDO('tabName',array('name' =>'a' , 'sxe'=>'2')    );
 
  //    SQL:  UPDATE `tabName` SET  `name`='b', `sxe`='1' WHERE `id` = '123' AND  `age` != '2' AND  `name` = 'a' AND  `book` like '泉%' ;
  // FK-PDO:  FK_PDO('tabName',array('name' =>'b' , 'sxe'=>'1'),array('id' =>'123' , 'age'=>'["!=","2"]','name'=>array("=","a"), 'book' =>'["like","泉%"]'  ));
