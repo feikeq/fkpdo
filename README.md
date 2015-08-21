@@ -52,6 +52,7 @@
  //    SQL:  SELECT   tabName1.`name`, tabName2.`sex`  FROM `tabName1`,`tabName2` WHERE `id` = 1234   LIMIT 0 ,10 ;
  // FK-PDO:  FK_PDO(  'tabName1`,`tabName2',' tabName1.`name`, tabName2.`sex` ','`id` = 1234', FALSE,FALSE,'0 ,10'  );
 
+```php
  //也可用非FKPDO方法直接SQL语句执行
      $dbConn = db_connect(); //连接数据库
      $query = $dbConn->query($SQL); //查询语句
@@ -59,3 +60,4 @@
      $query_count = $dbConn->exec($sql_count); //执行语句 像删表建表用它比较好  if($query_count !== false){操作成功}
      $lastInsertId = $dbConn->lastInsertId(); //得到最后一个ID 做插入新数据主录时可返回插入的主键值if($lastInsertId){插入成功}
      $rowCount = $query->rowCount(); //当为查询或更新时本次操作响应的总行数 if($rowCount){更新成功}
+```
