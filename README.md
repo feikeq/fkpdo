@@ -7,7 +7,7 @@
    INSERT INTO `tabName` ( `name`, `sxe`) VALUES ( 'a', '2') ;
 >   FK_PDO('tabName',array('name' =>'a' , 'sxe'=>'2')    );
 
-*   UPDATE `tabName` SET  `name`='b', `sxe`='1' WHERE `id` = '123' AND  `age` != '2' AND  `name` = 'a' AND  `book` like '泉%' ;
+   UPDATE `tabName` SET  `name`='b', `sxe`='1' WHERE `id` = '123' AND  `age` != '2' AND  `name` = 'a' AND  `book` like '泉%' ;
 >   FK_PDO('tabName',array('name' =>'b' , 'sxe'=>'1'),array('id' =>'123' , 'age'=>'["!=","2"]','name'=>array("=","a"), 'book' =>'["like","泉%"]'  ));
 >
 >   FK_PDO('tabName',array('name' =>'a' , 'sxe'=>'2'),"`id` = 123 AND  `age` != '2' AND  `name` = 'a' AND  `book` like '泉%'" ) ;
