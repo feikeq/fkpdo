@@ -114,7 +114,8 @@ function FK_PDO($TabName = '', $Field = '', $Where = '', $GroupBy = '', $OrderBy
         'data' => '' //返回数据
     );
 
-    function getField($Field_data,$type){
+    //拼接SQL语句字符串
+    $getField =function($Field_data,$type){
         $_i='';$_data='';$_value='';
         if($type == 'WHERE') $_i = 'WHERE';
         if($type == 'GROUP') $_i = 'GROUP BY';
@@ -137,16 +138,18 @@ function FK_PDO($TabName = '', $Field = '', $Where = '', $GroupBy = '', $OrderBy
                 }elseif($type == 'ORDER'){
                     $_data .= $_i." `$key` ". addslashes($value);
                 }elseif($type == 'WHERE'){
-                    $_value = json_decode($value,TRUE); //当该参数为 TRUE 时，将返回 array 而非 object 。
-                    if($_value && is_array($_value)){
-                        $_match = addslashes($_value[0]);
-                        $_value = addslashes($_value[1]);
-                    }elseif(is_array($value)){
+                    if(is_array($value)){
                         $_match = addslashes($value[0]);
                         $_value = addslashes($value[1]);
                     }else{
-                        $_match = "=";
-                        $_value = $value;
+                        $_value = json_decode($value,TRUE); //当该参数为 TRUE 时，将返回 array 而非 object 。
+                        if($_value && is_array($_value)){
+                            $_match = addslashes($_value[0]);
+                            $_value = addslashes($_value[1]);
+                        }else{
+                            $_match = "=";
+                            $_value = $value;
+                        }
                     }
                     $_data .= $_i." `$key` {$_match} '{$_value}'";
                     $_i = ' AND ';
@@ -183,7 +186,7 @@ function FK_PDO($TabName = '', $Field = '', $Where = '', $GroupBy = '', $OrderBy
     if( is_array($Field) && !isset($Field[0]) && !$Where && !$GroupBy && !$OrderBy && !$Limit ){
         //插入数据：有字段 没有条件 没有分组 没有排序 没有页数
         $_API_RESULT['meta']['type'] = "INSERT";
-        $_field = getField($Field,'INSERT');
+        $_field = $getField($Field,'INSERT');
         $sql = "INSERT INTO `{$TabName}` (".$_field[0].") VALUES (".$_field[1].") ;";
         $type = "INSERT";
 
@@ -193,9 +196,9 @@ function FK_PDO($TabName = '', $Field = '', $Where = '', $GroupBy = '', $OrderBy
         //更新数据：有字段 有条件
         $_API_RESULT['meta']['type'] = "UPDATE";
 
-        $_field = getField($Field,'UPDATE');
+        $_field = $getField($Field,'UPDATE');
 
-        $_where = getField($Where,'WHERE');
+        $_where = $getField($Where,'WHERE');
         
         $sql  = "UPDATE `{$TabName}` SET {$_field} {$_where} ;";
         $type = "UPDATE";
@@ -208,15 +211,15 @@ function FK_PDO($TabName = '', $Field = '', $Where = '', $GroupBy = '', $OrderBy
 
 
         if($Field){
-            $_field = getField($Field,'SELECT');
+            $_field = $getField($Field,'SELECT');
         }else{
             $_field="*";
         } 
 
-        if($Where) $_where = getField($Where,'WHERE');
-        if($GroupBy) $_groupby = getField($GroupBy,'GROUP');
-        if($OrderBy) $_orderby = getField($OrderBy,'ORDER');
-        if($Limit) $_limit = getField($Limit,'LIMIT');
+        if($Where) $_where = $getField($Where,'WHERE');
+        if($GroupBy) $_groupby = $getField($GroupBy,'GROUP');
+        if($OrderBy) $_orderby = $getField($OrderBy,'ORDER');
+        if($Limit) $_limit = $getField($Limit,'LIMIT');
 
         $sql = "SELECT $_field FROM `{$TabName}` $_where $_groupby $_orderby $_limit;";
         $type = "SELECT";
