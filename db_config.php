@@ -12,6 +12,7 @@ header("Content-Type: text/html; charset= UTF-8");
 
 /* 定义数据库常量 */
 define('DB_HOST', '数据库地址');
+define('DB_PORT','端口');
 define('DB_USER','用户名');
 define('DB_PWD','密码');
 define('DB_DATABASE','数据库');
@@ -23,8 +24,7 @@ function db_connect()
     //PDO比MySQLi好，PDO可以用在任何你想要使用的数据库上。PDO支持12种数据库驱动，而MySQLi只支持MySQL。
     //PDO(PHP Data Object) 是PHP 5新出来的东西，在PHP 6都要出来的时候，PHP 6只默认使用PDO来处理数据库，将把所有的数据库扩展移到了PECL，
     //那么默认就是没有了我们喜爱的php_mysql.dll之类的了，那怎么办捏，我们只有与时俱进了，我就小试了一把PDO。（本文只是入门级的，高手可以略过，呵呵）
-    $dsn = "mysql:host=".DB_HOST.";dbname=".DB_DATABASE;
-    //$dsn = "mysql:host=".CONF_DBHOST.";port=".CONF_DBPORT.";dbname=".DB_DATABASE.";charset=utf8"; 
+    $dsn = "mysql:host=".DB_HOST.";port=".DB_PORT.";dbname=".DB_DATABASE.";charset=utf8"; 
     $dbh = new PDO($dsn, DB_USER, DB_PWD); //连接数据库
     $dbh->exec("SET NAMES utf8"); //设置编码
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);//设置错误提示方式：错误提示,抛出异常
